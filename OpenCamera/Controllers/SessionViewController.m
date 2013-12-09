@@ -8,6 +8,15 @@
 
 #import "SessionViewController.h"
 
+
+#define MASKA   0xff000000
+#define MASKR   0x00ff0000
+#define MASKG   0x0000ff00
+#define MASKB   0x000000ff
+
+#define COLOR32_WHITE   0xffffffff
+#define COLOR32_BLACK   0xff000000
+
 @interface SessionViewController ()
 
 
@@ -123,19 +132,30 @@
     
     //为媒体数据设置一个CMSampleBuffer的Core Video图像缓存对象
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-    CVPixelBufferLockBaseAddress(imageBuffer, 0); // 锁定pixel buffer的基地址,并转化为UInt8类型
+    CVPixelBufferLockBaseAddress(imageBuffer, 0); // 锁定pixel buffer的基地址
     
     //從 CVImageBufferRef 取得影像的細部資訊
-    uint8_t *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer); //得到pixel buffer的基地址
-   
-    NSLog(@"%hhu, %hhu, %hhu", baseAddress[0], baseAddress[1], baseAddress[2]);
+    //得到pixel buffer的基地址，,并转化为UInt8类型，basaAddress是取得的一帧原始数据
+    uint8_t *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
+    double i = 0;
+    while (*baseAddress++) {
+        NSLog(@"%u", *baseAddress++);
+        i++;
+    }
+    NSLog(@"%f", i);
+//    NSLog(@"%u, %u, %u, %u, %u", baseAddress[0], baseAddress[1], baseAddress[2], baseAddress[3], baseAddress[4]);
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);   // 得到pixel buffer的行字节数
     size_t width = CVPixelBufferGetWidth(imageBuffer);// 得到pixel buffer的宽和高
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     NSLog(@"%zu, %zu, %zu", width, height, bytesPerRow);
     size_t size = CVPixelBufferGetDataSize(imageBuffer);
-    
     NSLog(@"%zu", size);
+    
+    uint8_t pixelRed = baseAddress[0];
+    uint8_t pixelGreen =baseAddress[1];
+    uint8_t pixelBlue = baseAddress[2];
+    uint8_t pixelAlpha = baseAddress[3];
+    NSLog(@"%hhu, %hhu, %hhu, %hhu", pixelRed, pixelGreen, pixelBlue, pixelAlpha);
     
     //利用取得影像細部資訊格式化 CGContextRef
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();// 创建一个依赖于设备的RGB颜色空间
@@ -163,7 +183,7 @@
 {
     
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-    NSLog(@"%@", image);
+//    NSLog(@"%@", image);
     
 }
 
