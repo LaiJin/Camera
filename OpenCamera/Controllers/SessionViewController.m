@@ -59,7 +59,7 @@
     NSLog(@"%@", [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]);
     
     AVCaptureDeviceInput *captureDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:rearCamera error:&error];
-    
+    NSLog(@"%@",captureDeviceInput);
     if (!error){
         
         self.captureSesstion = [[AVCaptureSession alloc] init];
@@ -67,7 +67,7 @@
         [self.captureSesstion addOutput:[self createCaptureVideoDataOutput]];
         [self.captureSesstion setSessionPreset:AVCaptureSessionPresetPhoto];
         [self.captureSesstion startRunning];
-        [self showVideoPreviewLayer];
+//        [self showVideoPreviewLayer];
         
     }
     else NSLog(@"not input");
@@ -92,9 +92,11 @@
     [captureVideoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
     
     AVCaptureConnection *captureConnection = [captureVideoDataOutput connectionWithMediaType:AVMediaTypeVideo];
+    NSLog(@"%@", captureConnection);
     [captureConnection setVideoMaxFrameDuration:CMTimeMake(1, 20)];
     [captureConnection setVideoMinFrameDuration:CMTimeMake(1, 10)];
     
+    NSLog(@"%@", captureVideoDataOutput);
     return captureVideoDataOutput;
     
 }
@@ -143,7 +145,6 @@
     CGImageRelease(quartzImage);
     CGContextRelease(context);
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-    
     return image;
     
 }
@@ -156,6 +157,7 @@
     
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
     NSLog(@"%@", image);
+//    NSLog(@"%f, %f", image.size.width, image.size.height);
     
 }
 

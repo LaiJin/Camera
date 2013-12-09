@@ -41,7 +41,7 @@
 {
     
     [super viewDidLoad];
-    [self setupCustomLayer];
+    [self setupCaptureSession];
     
 }
 
@@ -57,15 +57,16 @@
 	NSLog(@"%@",[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]);
     
     AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:rearCamera  error:nil];
+    NSLog(@"%@", captureInput);
     
     self.captureSession = [[AVCaptureSession alloc] init];
     [self.captureSession addInput:captureInput];
     [self.captureSession addOutput:[self createCaptureVideoDataOutput]];
-	[self.captureSession setSessionPreset:AVCaptureSessionPresetLow];
+	[self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
     [self.captureSession startRunning];
     
 //	[self setupCustomLayer];
-	[self showVideoPreviewLayer];
+//	[self showVideoPreviewLayer];
     
 }
 
@@ -160,7 +161,7 @@
 {
     
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
-    NSLog(@"%@", image);
+    NSLog(@"%f, %f", image.size.height, image.size.width);
     
 }
 

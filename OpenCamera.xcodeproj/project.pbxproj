@@ -275,6 +275,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = lunajin;
+				TargetAttributes = {
+					9A632BB2184F179A0059BFBB = {
+						DevelopmentTeam = 2A48575WNC;
+					};
+				};
 			};
 			buildConfigurationList = 9A632BAE184F179A0059BFBB /* Build configuration list for PBXProject "OpenCamera" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -446,10 +451,13 @@
 		9A632BE6184F179B0059BFBB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenCamera/OpenCamera-Prefix.pch";
 				INFOPLIST_FILE = "OpenCamera/OpenCamera-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -457,10 +465,13 @@
 		9A632BE7184F179B0059BFBB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenCamera/OpenCamera-Prefix.pch";
 				INFOPLIST_FILE = "OpenCamera/OpenCamera-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

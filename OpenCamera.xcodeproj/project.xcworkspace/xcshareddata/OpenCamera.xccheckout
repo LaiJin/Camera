@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>91F8E02C-BCB0-40F9-832A-366831087BEB</string>
+	<string>84379D96-51F4-495B-9C64-29C9106E677D</string>
 	<key>IDESourceControlProjectName</key>
 	<string>OpenCamera</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>20C4ACB1-56D9-46AF-A6E2-F6C1F5E0CDD7</key>
-		<string>https://github.com/LaiJin/OpenCamera.git</string>
+		<key>BDC49562-FE6A-4039-921E-ECBC452C0214</key>
+		<string>https://github.com/LaiJin/Camera.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>OpenCamera.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>20C4ACB1-56D9-46AF-A6E2-F6C1F5E0CDD7</key>
+		<key>BDC49562-FE6A-4039-921E-ECBC452C0214</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/LaiJin/OpenCamera.git</string>
+	<string>https://github.com/LaiJin/Camera.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>20C4ACB1-56D9-46AF-A6E2-F6C1F5E0CDD7</string>
+	<string>BDC49562-FE6A-4039-921E-ECBC452C0214</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>20C4ACB1-56D9-46AF-A6E2-F6C1F5E0CDD7</string>
+			<string>BDC49562-FE6A-4039-921E-ECBC452C0214</string>
 			<key>IDESourceControlWCCName</key>
-			<string>OpenCamera</string>
+			<string>Camera</string>
 		</dict>
 	</array>
 </dict>

@@ -7,7 +7,7 @@
 //
 
 #import "OpenCameraViewController.h"
-//#import "VideoStreamingController.h"
+#import "VideoStreamingController.h"
 
 @interface OpenCameraViewController (){
     
@@ -66,7 +66,7 @@
         
         imagePickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:imagePickerController animated:YES completion:nil];
-        
+//        imagePickerController.showsCameraControls = NO;控制是否显示照相按钮
     }
     else    NSLog(@"没有相机");
     

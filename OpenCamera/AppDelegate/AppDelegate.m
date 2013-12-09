@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "OpenCameraViewController.h"
 #import "SessionViewController.h"
+#import "CameraViewController.h"
 
 @implementation AppDelegate
 
@@ -21,8 +22,11 @@
 //    self.navigationController = [[UINavigationController alloc] initWithRootViewController: openCameraViewController];
 //    self.window.rootViewController = self.navigationController;
     
-    SessionViewController *sessionController = [[SessionViewController alloc] init];
-    self.window.rootViewController = sessionController;
+//    SessionViewController *sessionController = [[SessionViewController alloc] init];
+//    self.window.rootViewController = sessionController;
+    
+    CameraViewController *cameraViewController = [[CameraViewController alloc] init];
+    self.window.rootViewController = cameraViewController;
     
     [self.window makeKeyAndVisible];
     return YES;

@@ -55,7 +55,7 @@
 {
     
     [super viewDidLoad];
-    [self setupCustomLayer];
+    [self setupCaptureSession];
     
 }
 
@@ -66,16 +66,16 @@
 - (void)setupCaptureSession
 {
     
-	AVCaptureDevice *frontCamera = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-    //    AVCaptureDevice *frontCamer = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+//	AVCaptureDevice *frontCamera = [[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    AVCaptureDevice *frontCamera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
 	NSLog(@"%@",[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]);
     
     AVCaptureDeviceInput *captureInput = [AVCaptureDeviceInput deviceInputWithDevice:frontCamera  error:nil];
-    
+    NSLog(@"%@", captureInput);
     self.captureSession = [[AVCaptureSession alloc] init];
     [self.captureSession addInput:captureInput];
     [self.captureSession addOutput:[self createCaptureVideoDataOutput]];
-	[self.captureSession setSessionPreset:AVCaptureSessionPresetLow];
+	[self.captureSession setSessionPreset:AVCaptureSessionPresetPhoto];
     [self.captureSession startRunning];
     
     //	[self setupCustomLayer];
@@ -83,6 +83,7 @@
     [self addImageVew];
     
     calculatedRGBA = calloc(8, sizeof(CGFloat));
+    NSLog(@"%f", *calculatedRGBA);
 	currentState = kStateUntouched;
     
 }
@@ -192,17 +193,22 @@
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer,0);
     uint8_t *baseAddress = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+//    NSLog(@"%hhu", *baseAddress);
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
-	
+//	NSLog(@"%zu", width);
+//    NSLog(@"%zu", height);
+//    NSLog(@"%zu", bytesPerRow);				
 	if (currentState == kStateCalculating) {
 		long squareLength = (long)((float)height * centerPercent);
 		long addition = (height - squareLength)*bytesPerRow/2 + (width - squareLength)*2;
 		NSLog(@"%zd,%zd,%zd,%zd",addition,squareLength,width,height);
 		if (!centerSquareRGBAs) {
 			arrayTotalCount = squareLength * squareLength;
+            NSLog(@"%i", arrayTotalCount);
 			centerSquareRGBAs = calloc(arrayTotalCount*4, sizeof(CGFloat));
+            NSLog(@"%f", *centerSquareRGBAs);
 		}
 		for (int i=0; i < squareLength; i++) {
 			for (int j=0; j < squareLength; j++) {
@@ -228,7 +234,7 @@
 			green = baseAddress[i*4 + 1];
 			blue =  baseAddress[i*4 + 2];
 			alpha = baseAddress[i*4 + 3];
-			
+			NSLog(@"%f, %f, %f, %f", red, green, blue, alpha);
 			BOOL belongTo = YES;
 			if ((red - calculatedRGBA[0]) * (red - calculatedRGBA[4]) > 0) {
 				belongTo = NO;
