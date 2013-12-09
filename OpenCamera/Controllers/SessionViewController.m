@@ -132,7 +132,7 @@
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);   // 得到pixel buffer的行字节数
     size_t width = CVPixelBufferGetWidth(imageBuffer);// 得到pixel buffer的宽和高
     size_t height = CVPixelBufferGetHeight(imageBuffer);
-    
+    NSLog(@"%zu, %zu, %zu", width, height, bytesPerRow);
     size_t size = CVPixelBufferGetDataSize(imageBuffer);
     
     NSLog(@"%zu", size);
@@ -144,10 +144,12 @@
                                                  kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
     CGColorSpaceRelease(colorSpace);
     
+    
     //通过 CGImageRef 將 CGContextRef 转化成 UIImage
-    CGImageRef quartzImage = CGBitmapContextCreateImage(context);// 根据这个位图context中的像素数据创建一个Quartz image对象
-    UIImage *image = [UIImage imageWithCGImage:quartzImage];
-    CGImageRelease(quartzImage);
+    CGImageRef imageRef= CGBitmapContextCreateImage(context);// 根据这个位图context中的像素数据创建一个Quartz image对象
+    UIImage *image = [UIImage imageWithCGImage:imageRef];
+//    NSLog(@"%f, %f", image.size.width, image.size.height);
+    CGImageRelease(imageRef);
     CGContextRelease(context);
     CVPixelBufferUnlockBaseAddress(imageBuffer,0);  // 解锁pixel buffer
     return (image);
@@ -162,7 +164,6 @@
     
     UIImage *image = [self imageFromSampleBuffer:sampleBuffer];
     NSLog(@"%@", image);
-//    NSLog(@"%f, %f", image.size.width, image.size.height);
     
 }
 
