@@ -72,9 +72,11 @@
     if (!error){
         
         self.captureSesstion = [[AVCaptureSession alloc] init];
+        [self.captureSesstion beginConfiguration];
         [self.captureSesstion addInput:captureDeviceInput];
         [self.captureSesstion addOutput:[self createCaptureVideoDataOutput]];
         [self.captureSesstion setSessionPreset:AVCaptureSessionPresetPhoto];
+        [self.captureSesstion commitConfiguration];
         [self.captureSesstion startRunning];
         [self showVideoPreviewLayer];
         
@@ -119,7 +121,7 @@
     AVCaptureVideoPreviewLayer* previewLayer = [AVCaptureVideoPreviewLayer layerWithSession: self.captureSesstion];
     previewLayer.frame = self.view.bounds; //视频显示到的UIView
     previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    //    [previewLayer setOrientation:AVCaptureVideoOrientationLandscapeRight];
+    [previewLayer.connection setVideoOrientation:AVCaptureVideoOrientationLandscapeRight];
     [self.view.layer addSublayer: previewLayer];
     
 }
@@ -131,31 +133,48 @@
 {
     
     //为媒体数据设置一个CMSampleBuffer的Core Video图像缓存对象
-    CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CVImageBufferRef imageBuffer =CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0); // 锁定pixel buffer的基地址
     
     //從 CVImageBufferRef 取得影像的細部資訊
     //得到pixel buffer的基地址，,并转化为uint_8类型，basaAddress是取得的一帧原始数据
-    uint32_t *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
+    uint8_t *baseAddress = (uint8_t *) CVPixelBufferGetBaseAddress(imageBuffer);
 //    double i = 0;
 //    while (*baseAddress++) {
 //        i++;
 //    }
 //    NSLog(@"%f", i);
+    
     NSLog(@"%u, %u, %u, %u, %u", baseAddress[0], baseAddress[1], baseAddress[2], baseAddress[3], baseAddress[4]);
     size_t bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer);   // 得到pixel buffer的行字节数
     size_t width = CVPixelBufferGetWidth(imageBuffer);// 得到pixel buffer的宽和高
     size_t height = CVPixelBufferGetHeight(imageBuffer);
+    
 //    NSLog(@"%zu, %zu, %zu", width, height, bytesPerRow);
-    size_t size = CVPixelBufferGetDataSize(imageBuffer);
+    
+//    int bufferSize = bytesPerRow * height;
+//    uint8_t *tempAddress = malloc(bufferSize);
+//    memcpy(tempAddress, baseAddress, bytesPerRow * height);
+//    baseAddress = tempAddress;
+    
+//    size_t size = CVPixelBufferGetDataSize(imageBuffer);
 //    NSLog(@"%zu", size);
     
-    uint8_t pixelRed = (baseAddress[0] & MASKR) >> 16;
-    uint8_t pixelGreen = (baseAddress[1] & MASKR) >> 16;
-    uint8_t pixelBlue = (baseAddress[2] & MASKB) ;
-    uint8_t pixelAlpha = (baseAddress[3] & MASKA)   
-    ;
-    NSLog(@"%hhu, %hhu, %hhu, %hhu", pixelRed, pixelGreen, pixelBlue, pixelAlpha);
+//    NSUInteger bytesPerPixel = 4;
+//    int byteIndex = bytesPerRow * bytesPerPixel;
+//    char red = baseAddress[byteIndex];
+//    char green = baseAddress[byteIndex + 1];
+//    char blue = baseAddress[byteIndex + 2];
+//    char alpha = baseAddress[byteIndex + 3];
+//    NSLog(@"%hhd, %hhd, %hhd, %hhd", red, green, blue, alpha);
+    
+
+    
+//    uint8_t pixelRed = (baseAddress[0] & MASKR) >> 16;
+//    uint8_t pixelGreen = (baseAddress[1] & MASKR) >> 8;
+//    uint8_t pixelBlue = (baseAddress[2] & MASKB) ;
+//    uint8_t pixelAlpha = (baseAddress[3] & MASKA);
+//    NSLog(@"%hhu, %hhu, %hhu, %hhu", pixelRed, pixelGreen, pixelBlue, pixelAlpha);
     
     //利用取得影像細部資訊格式化 CGContextRef
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();// 创建一个依赖于设备的RGB颜色空间
